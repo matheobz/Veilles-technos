@@ -2,8 +2,13 @@ name: Veille IA -> Notion
 
 on:
   schedule:
-    - cron: "15 6 * * *"   # 06:15 UTC = 07:15 Paris en hiver
+    - cron: "0 22 * * *"   # 22:00 UTC = 00:00 Paris (heure d'été) / 23:00 hiver
   workflow_dispatch:
+    inputs:
+      per_day:
+        description: "Nombre de veilles à récupérer"
+        required: false
+        default: "2"
 
 jobs:
   run:
@@ -19,3 +24,4 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           FEEDS: ${{ secrets.FEEDS }}
+          PER_DAY: ${{ github.event.inputs.per_day || '2' }}
