@@ -20,8 +20,8 @@ NOTION_TOKEN = os.getenv("NOTION_TOKEN", "").strip()
 NOTION_DATABASE_ID = os.getenv("NOTION_DATABASE_ID", "").strip()
 NOTION_VERSION = os.getenv("NOTION_VERSION", "2025-09-03").strip()
 
-PER_DAY = int(os.getenv("PER_DAY", "2"))  # 2 veilles/jour
-MAX_AGE_HOURS = int(os.getenv("MAX_AGE_HOURS", "48"))  # on ne considère que les 48 dernières heures
+PER_DAY = int(os.getenv("PER_DAY", "1"))  # 1 veille/jour
+MAX_AGE_HOURS = int(os.getenv("MAX_AGE_HOURS", "168"))  # on considère les 7 derniers jours
 LOOKBACK_DAYS_DEDUP = int(os.getenv("LOOKBACK_DAYS_DEDUP", "180"))  # anti-doublons (url déjà postée)
 
 # Noms de propriétés (tu peux adapter si besoin)
