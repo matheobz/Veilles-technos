@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
-
 import requests
 import feedparser
 
@@ -373,22 +372,9 @@ def main():
     today = now_paris.date()
     tomorrow = (now_paris + timedelta(days=1)).date()
 
-    # combien déjà créées aujourd’hui (idéalement seulement les automatiques)
-    filters = [
-        {"property": date_prop, "date": {"on_or_after": today.isoformat(), "before": tomorrow.isoformat()}}
-    ]
-    if auto_prop:
-        filters.append({"property": auto_prop, "checkbox": {"equals": True}})
-
-    body_today = {"page_size": 100, "filter": {"and": filters}} if len(filters) > 1 else {"page_size": 100, "filter": filters[0]}
-    resp_today = notion.query_parent(mode, parent_id, body_today)
-    created_today = len(resp_today.get("results", []))
-    remaining = max(0, PER_DAY - created_today)
-
-    print(f"[INFO] {created_today} déjà créées aujourd’hui ({today}), objectif={PER_DAY}, remaining={remaining}")
-
-    if remaining <= 0:
-        return
+    # Mode forcé : on crée toujours PER_DAY veille(s), quoi qu'il arrive
+    remaining = PER_DAY
+    print(f"[INFO] Mode forcé : création de {remaining} veille(s) aujourd'hui ({today})")
 
     # set d’URLs existantes (lookback) pour éviter les doublons d’un jour à l’autre
     lookback_start = (today - timedelta(days=LOOKBACK_DAYS_DEDUP)).isoformat()
