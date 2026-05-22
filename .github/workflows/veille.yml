@@ -8,7 +8,7 @@ on:
       per_day:
         description: "Nombre de veilles à récupérer"
         required: false
-        default: "2"
+        default: "1"
 
 jobs:
   run:
@@ -24,4 +24,4 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           FEEDS: ${{ secrets.FEEDS }}
-          PER_DAY: ${{ github.event.inputs.per_day || '2' }}
+          PER_DAY: ${{ github.event.inputs.per_day || '1' }}
